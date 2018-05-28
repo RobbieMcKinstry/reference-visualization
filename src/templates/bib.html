@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <title>Reference Visualizer</title>
+    </head>
+    <body>
+        <h1>{{ bib.name }}</h1>
+        <ol>
+            {% for entry in bib.entries %}
+            <li>{{ entry }}</li>
+            {% endfor %}
+        </ol>
+    </body>
+</html>

@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <title>Reference Visualizer</title>
+    </head>
+    <body>
+        <h1>Bibliographies</h1>
+        <ol>
+            {% for key, item in bibliographies.items() %}
+                <li><a href="{{ item.href }}">{{ item.name }}</a></li>
+            {% endfor %}
+        </ol>
+    </body>
+</html>
