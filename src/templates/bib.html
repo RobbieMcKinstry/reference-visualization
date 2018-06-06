@@ -1,13 +1,48 @@
 <html>
-    <head>
-        <title>Reference Visualizer</title>
+  <head>
+    <title>Reference Visualizer</title>
+      <script src={{ url_for('static', filename='sigma.min.js') }}> </script>
+      <script src={{ url_for('static', filename='sigma.parsers.json.min.js')}}></script>
+      <script src={{ url_for('static', filename='sigma.layout.forceAtlas2.min.js')}}></script>
+      <style type="text/css">
+        #container {
+          max-width: 800px;
+          height: 800px;
+          margin: auto;
+        }
+      </style>
     </head>
     <body>
-        <h1>{{ bib.name }}</h1>
-        <ol>
-            {% for entry in bib.entries %}
-            <li>{{ entry }}</li>
-            {% endfor %}
-        </ol>
+      <h1>{{ bib.name }}</h1>
+      <ol>
+        {% for entry in bib.entries %}
+        <li>{{ entry }}</li>
+        {% endfor %}
+      </ol>
+
+      <div id="container"></div>
+      <script>
+        var sigma_graph = new sigma('container');
+        {% for entry in bib.entries %}
+        
+        sigma_graph.graph.addNode({
+            id: '{{ entry.url }}',
+            size: 1,
+            color: '#f5a3',
+            label: '{{ entry.title }}',
+            x: 10,
+            y: 10
+        });
+        
+        {% endfor %}
+
+        sigma_graph.graph.nodes().forEach(function(node, i, a) {
+          node.x = Math.cos(Math.PI * 2 * i / a.length);
+          node.y = Math.sin(Math.PI * 2 * i / a.length);
+        });
+        sigma_graph.startForceAtlas2()
+        sigma_graph.refresh();
+        sigma_graph.startForceAtlas2()
+      </script>
     </body>
 </html>

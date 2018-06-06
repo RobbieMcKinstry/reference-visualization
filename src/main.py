@@ -2,6 +2,7 @@ import os
 
 from flask import Flask
 from flask import render_template
+from flask import jsonify
 import bibtexparser
 
 app = Flask(__name__)
@@ -30,6 +31,8 @@ class BibEntry:
 def bib(name=None):
     if name is None:
         return 'no such bibliography'
+    if not READ_ONLY_BIBS.get(name):
+        return 'no such key'
     bib = READ_ONLY_BIBS[name]
     return render_template('bib.html', bib=bib)
 
